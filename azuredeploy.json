@@ -11,6 +11,7 @@
   "parameters": {
   },
   "variables": {
+    "aiServicesAccountName": "[format('ais-{0}', variables('uniqueSuffix'))]",
     "keyVaultName": "[format('kv-{0}', variables('uniqueSuffix'))]",
     "location": "[resourceGroup().location]",
     "storageAccountName": "[format('sa{0}', variables('uniqueSuffix'))]",
@@ -68,6 +69,17 @@
       }
     },
     {
+      "type": "Microsoft.CognitiveServices/accounts",
+      "apiVersion": "2017-04-18",
+      "name": "[variables('aiServicesAccountName')]",
+      "location": "[variables('location')]",
+      "sku": {
+        "name": "S1"
+      },
+      "kind": "CognitiveServices",
+      "properties": {}
+    },
+    {
       "type": "Microsoft.MachineLearningServices/workspaces",
       "apiVersion": "2020-03-01",
       "name": "[variables('workspaceName')]",
@@ -82,6 +94,7 @@
         "storageAccount": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
       },
       "dependsOn": [
+        "[resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesAccountName'))]",
         "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]",
         "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
       ]
