@@ -74,7 +74,7 @@
       "name": "[variables('aiServicesAccountName')]",
       "location": "[variables('location')]",
       "sku": {
-        "name": "S1"
+        "name": "S0"
       },
       "kind": "CognitiveServices",
       "properties": {}
